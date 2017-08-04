@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+<title>reddit post prediction</title>
+<body class="background">
+<div class="contentBorder">
+{% if disabled_account %}
+<p class="allText">The password is valid, but the account has been disabled! you may need to verify email, click here to send a new activation email</p><a href="http://localhost:8000/new-activation-link/{{ id_user }}">send a new activation link!</a>
+{% endif %}
+{% if incorrect %}
+<p class="allText"> the password or username were incorrect, click <a href='http://localhost:8000/reset_password/'>here</a> to reset password</p> 
+{% endif %}
+{% if request.user.is_authenticated %}
+<p class="allText">you are logged in as {{ user.username }}:</p><form method="post" action="/logout_page/">{% csrf_token %}<button type="submit" tabindex="8" id="verify_email" 
+    class="col-sm-push-6 btn btn-primary text-uppercase btn-large">Logout</button></form>
+{% else %}
+<p class="allText">Sign in</p>
+
+
+<form class="form-inline" action="/sign_page/" method="post">
+    {{ form.non_field_errors }}
+    {% csrf_token %}
+
+    <div class="fieldWrapperDates">
+    <label class="userlabel">username:</label>
+        {{ form.username.errors }}
+
+        {{ form.username }}
+        
+    </div>
+    
+    
+    <div class="fieldWrapperDates">
+    <label class="userlabel">password:</label>
+        {{ form.password1.errors }}
+                    
+        {{ form.password1 }}
+    </div>
+    
+
+    <p class="newSearch"><button type="submit" tabindex="8" id="sign_in" 
+    class="col-sm-push-6 btn btn-primary text-uppercase btn-large">Sign In</button></p>
+</form>
+<label class="userlabel"><a href="{% url 'reset_password' %}">Forgot password?</a></label>
+{% endif %}
+</div>
+</body>
+{% endblock %}

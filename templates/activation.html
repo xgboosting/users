@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="contentBorder">
+<title>Activation</title>
+{% if activation_expired %}
+<p>resend activation email</p>
+
+<a href="http://trendpinger.com/new-activation-link/{{ id_user }}">send a new activation link!</a>
+
+{% elif already_active %}
+<p  class="allText">your account is already active<p>
+{% else %}
+<p  class="allText">your account has been activated!!</p>
+{% endif %}
+</div>
+{% endblock %}

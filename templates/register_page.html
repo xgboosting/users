@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block content %}
+<title>reddit post prediction</title>
+<body class="background">
+<div class="contentBorder">
+{% if email_sent %}
+
+<p  class="allText">an activation link has been sent to the email address you provided</p>
+{% else %}
+{% if email_taken %}
+<p  class="allText">that email is already in use<a href="{% url 'reset_password' %}"> recover password</a></p>
+{% endif %}
+{% if username_taken %}
+<p  class="allText">that username is already in use<a href="{% url 'reset_password' %}"> recover password</a></p>
+{% endif %}
+<title>register</title>
+<form class="form-inline" action="/register_page/" method="post">
+    {{ form.non_field_errors }}
+    {% csrf_token %}
+    <div class="fieldWrapperDates">
+    <label class="userlabel">username:</label>
+        {{ form.username.errors }}
+
+        {{ form.username }}
+        
+    </div>
+    
+    <div class="fieldWrapperDates">
+    <label class="userlabel">email:</label>
+        {{ form.email.errors }}
+
+        {{ form.email }}
+        
+    </div>
+    <div class="fieldWrapperDates">
+    <label class="userlabel">password:</label>
+        {{ form.password1.errors }}
+                    
+        {{ form.password1 }}
+    </div>
+    <div class="fieldWrapperDates">
+    <label class="userlabel">repeat password:</label>
+        {{ form.password2.errors }}
+                    
+        {{ form.password2 }} 
+    </div>                                 
+
+    <p class="newSearch"><button type="submit" tabindex="8" id="verify_email" 
+    class="col-sm-push-6 btn btn-primary text-uppercase btn-large"><i class="fa fa-envelope" aria-hidden="true"></i>
+Verify email</button></p>
+            
+</form>
+{% endif %}
+</div>
+</body>
+{% endblock %}
