@@ -45,7 +45,7 @@ def register_page(request):
             #print(salt)
             #print(usernamesalt)
             datas['activation_key']=hashlib.sha1(salt+usernamesalt).hexdigest()
-            datas['email_path']="/home/connlloc/sites/mc/static/ActivationEmail.txt"
+            datas['email_path']="/path_to/ActivationEmail.txt"
             datas['email_subject']="activate your account"
             form.sendEmail(datas) #Send validation email
             form.save(datas) #Save the user and his profile
@@ -86,8 +86,8 @@ def new_activation_link(request, user_id):# check if it's the same user and if t
     if user is not None and not user.is_active:#here
         datas['username']=user.username
         datas['email']=user.email
-        datas['email_path']="/home/connlloc/sites/mc/static/ResendEmail.txt"
-        datas['email_subject']="Welcome to trendpinger"
+        datas['email_path']="path_to/ResendEmail.txt"
+        datas['email_subject']="Welcome to site_name"
 
         salt = hashlib.sha1(str(random.random()).encode('utf-8')).hexdigest()[:5]
         usernamesalt = datas['email']
@@ -123,7 +123,7 @@ def reset_password(request): #send email with new password set new password, che
         u = User.objects.get(email=form.cleaned_data['email'])
         u.set_password(password)
         u.save()
-        send_mail('new password', 'hello, please log with this password and change it http://trendpinger.com/change_password/:' + password , 'gonnellcough@gmail.com', [form.cleaned_data['email']], fail_silently=False)
+        send_mail('new password', 'hello, please log with this password and change it http://localhost.com/change_password/:' + password , 'gonnellcough@gmail.com', [form.cleaned_data['email']], fail_silently=False)
         success = True
         return render(request,'passwordsent.html',{'success': success})
     

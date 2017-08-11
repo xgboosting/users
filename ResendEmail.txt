@@ -1,0 +1,1 @@
+Greetings, thank you for joining {{ activation_link }} follow this link to activate your account.
